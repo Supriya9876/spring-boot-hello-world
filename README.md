@@ -1,4 +1,9 @@
 Docerhub repo- https://hub.docker.com/repository/docker/sb346/hello-world/general
+
+
+
+
+
 deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -19,6 +24,10 @@ spec:
           image: sb346/hello-world
           ports:
             - containerPort: 8080
+
+
+
+
 
 service.yaml
 apiVersion: v1
