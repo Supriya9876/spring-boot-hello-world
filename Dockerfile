@@ -1,7 +1,6 @@
 FROM openjdk:17-jdk-slim
 WORKDIR /app
-# Copy the built JAR from the builder stage
-COPY . /app
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+COPY HelloWorld.java .
+RUN javac HelloWorld.java
+CMD ["java", "HelloWorld"]
 
