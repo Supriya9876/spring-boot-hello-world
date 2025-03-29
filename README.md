@@ -1,51 +1,38 @@
-# Spring Boot Hello World
+Docerhub repo- https://hub.docker.com/repository/docker/sb346/hello-world/general
+deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world  
+  template:
+    metadata:
+      labels:
+        app: hello-world   
+    spec:
+      containers:
+        - name: helloworld-container
+          image: sb346/hello-world
+          ports:
+            - containerPort: 8080
 
-**A simple Spring Boot 2.x app to send hello world message to a user**
-
-## How to Run Application
-
-**Start the application using any of the commands mentioned below**
-
-> **Note:** First two commands need to run inside the root folder of this project i.e inside the **spring-boot-hello-world** folder
-
-
-- **Using maven** <br/>``` mvn spring-boot:run```
-
-
-- **From jar file**
-  Create a jar file using '**mvn clean install**' command and then execute
-  <br/>```java -jar target/spring-boot-2-hello-world-1.0.2-SNAPSHOT.jar```
-
-
-- **Directly from IDE**
-  <br/>```Right click on HelloWorldApplication.java and click on 'Run' option```
-  <br/><br/>
-
-> **Note:** By default spring boot application starts on port number 8080. If port 8080 is occupied in your system then you can change the port number by uncommenting and updating the **server.port** property inside the **application.properties** file that is available inside the **src > main > resources** folder.
-
-<br/>
-
-**Send an HTTP GET request to '/hello' endpoint using any of the two methods**
-
-- **Browser or REST client**
-  <br/>```http://localhost:8080/hello```
-
-
-- **cURL**
-  <br/>```curl --request GET 'http://localhost:8080/hello'```
-
-
-## How to Run Unit Test Cases
-
-**Run the test cases using any of the commands mentioned below**
-
-> **Note:** These commands need to run inside the root folder of this project i.e inside the **spring-boot-hello-world** folder
-
-- **To run all the test cases**
-  <br/>```mvn test```
+service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld-service
+spec:
+  selector:
+    app: helloworld
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30007
+  type: NodePort
 
 
-- **To run a particular test class**
-  <br/>```mvn -Dtest=HelloWorldControllerTest test```
-  <br/>or
-  <br/>```mvn -Dtest=HelloWorldApplicationTests test```
